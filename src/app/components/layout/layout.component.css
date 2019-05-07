@@ -15,14 +15,16 @@
   color: #1890ff;
 }
 
-.logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
+.im-toogle {
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
 }
-
 .im-body {
-  padding:24px;
+  padding: 24px;
   background: #fff;
   min-height: 360px;
+  margin-top: 16px;
 }

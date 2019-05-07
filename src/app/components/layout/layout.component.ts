@@ -7,7 +7,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  isCollapsed = false;
+  isCollapsed = true;
   triggerTemplate: TemplateRef<void> | null = null;
   @ViewChild('trigger') customTrigger: TemplateRef<void>;
 
