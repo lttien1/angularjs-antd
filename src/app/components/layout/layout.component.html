@@ -2,13 +2,19 @@
   <nz-layout>
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
       <div class="im-toogle"><i class="trigger" nz-icon [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-        (click)="isCollapsed = !isCollapsed"></i></div>
+          (click)="isCollapsed = !isCollapsed"></i></div>
       <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-        <li nz-menu-item>
-          <span><i nz-icon type="contacts"></i><span class="nav-text">Contacts</span></span>
+        <li nz-menu-item [nzSelected]="router.url === '/contacts'">
+          <a routerLink="/contacts" routerLinkActive="active">
+            <i nz-icon type="contacts"></i>
+            <span class="nav-text">Contacts</span>
+          </a>
         </li>
         <li nz-menu-item>
-          <span><i nz-icon type="shopping-cart"></i><span class="nav-text">Orders</span></span>
+          <a routerLink="/orders" routerLinkActive="active">
+            <i nz-icon type="shopping-cart"></i>
+            <span class="nav-text">Orders</span>
+          </a>
         </li>
         <li nz-menu-item>
           <span><i nz-icon type="gift"></i><span class="nav-text">Products</span></span>
@@ -17,17 +23,32 @@
           <span><i nz-icon type="bar-chart"></i><span class="nav-text">Reports</span></span>
         </li>
         <li nz-submenu>
-          <span title><i nz-icon type="setting"></i><span class="nav-text">Settings</span></span>
+          <a title routerLink="/settings/properties" routerLinkActive="active">
+            <i nz-icon type="setting"></i><span class="nav-text">Settings</span>
+          </a>
           <ul>
-            <li nz-menu-item>Account</li>
-            <li nz-menu-item>Properties</li>
+            <li nz-menu-item [nzSelected]="router.url === '/settings/accounts'"><a routerLink="/settings/account" routerLinkActive="active">Account</a></li>
+            <li nz-menu-item [nzSelected]="router.url === '/settings/properties'"><a routerLink="/settings/properties" routerLinkActive="active">Properties</a></li>
           </ul>
         </li>
-        
       </ul>
     </nz-sider>
     <nz-layout>
-      <nz-header style="background: #fff; padding:0;">
+      <nz-header style="background: #fff; padding:0;" [ngSwitch]="router.url">
+        <ul nz-menu [nzMode]="'horizontal'" class="im-header-menu">
+          <li nz-menu-item nzSelected *ngSwitchCase="'/contacts'"><i nz-icon type="contacts"></i> Contacts</li>
+          <li nz-menu-item nzSelected *ngSwitchCase="'/orders'"><i nz-icon type="shopping-cart"></i> Orders</li>
+          <li nz-menu-item nzSelected *ngSwitchCase="'/products'"><i nz-icon type="gift"></i> Products</li>
+          <ng-container *ngSwitchCase="'/settings/accounts'">
+            <li nz-menu-item nzSelected><a routerLink="/settings/accounts" routerLinkActive="active"><i nz-icon type="gift"></i> Accounts</a></li>
+            <li nz-menu-item><a routerLink="/settings/properties" routerLinkActive="active"><i nz-icon type="gift"></i> Properties</a></li>
+          </ng-container>
+          <ng-container *ngSwitchCase="'/settings/properties'">
+            <li nz-menu-item><a routerLink="/settings/accounts" routerLinkActive="active"><i nz-icon type="gift"></i> Accounts</a></li>
+            <li nz-menu-item nzSelected><a routerLink="/settings/properties" routerLinkActive="active"><i nz-icon type="gift"></i> Properties</a></li>
+          </ng-container>
+          <li nz-menu-item nzSelected *ngSwitchCase="'/reports'"><i nz-icon type="bar-chart"></i> Reports</li>
+        </ul>
       </nz-header>
       <nz-content style="margin:0 16px;">
         <div class="im-body">

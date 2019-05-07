@@ -10,6 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { ContactsComponent } from './contacts/contacts.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { SettingsComponent } from './settings/settings.component';
 
 registerLocaleData(en);
 
@@ -17,7 +18,8 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     ContactsComponent,
-    LayoutComponent
+    LayoutComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

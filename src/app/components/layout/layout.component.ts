@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -11,9 +12,10 @@ export class LayoutComponent implements OnInit {
   triggerTemplate: TemplateRef<void> | null = null;
   @ViewChild('trigger') customTrigger: TemplateRef<void>;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    console.log('!!!!!!!', this.router);
   }
 
   changeTrigger(): void {
