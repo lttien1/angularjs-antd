@@ -1,64 +1,58 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-
 import { Injectable } from '@angular/core';
-import { Headers, Http, Request, RequestOptions, Response, XHRBackend } from '@angular/http';
-import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
+import { ServerResponse } from '../interfaces/server-response.interface';
+import { HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
+import { throwError, Observable } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
 
-import { AppModule } from '../app.module';
-import { AppConstants } from '../app.constants';
-import { HelperService } from './helper.service';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type':  'application/json' }),
+};
 
 @Injectable()
 
-export class HttpService extends Http {
-  helperService: HelperService;
-  router: Router;
-  constructor(backend: XHRBackend, options: RequestOptions) {
-    super(backend, options);
-    this.helperService = AppModule.injector.get(HelperService);
-    this.router = AppModule.injector.get(Router);
+export class HttpService {
+  constructor(private http: HttpClient) {}
+
+  get(url): Observable<ServerResponse> {
+    return this.http.post(url, httpOptions)
+      .pipe(
+        map(
+          (res: ServerResponse) => this.handleResponse(res)
+        ),
+        catchError(this.handleError)
+      );
   }
 
-  request(url: string | Request, options?: RequestOptions): Observable<Response> {
-    if (typeof url === 'string') {
-      if (!options) {
-        // let's make an option object
-        options = new RequestOptions({
-          headers: new Headers({ 'Content-Type': 'application/json' })
-        });
-      }
-      this.createRequestOptions(options);
-    } else {
-      this.createRequestOptions(url);
-    }
-    // return super.request(url, options).catch(this.catchAuthError(this));
-    return super.request(url, options);
+  post(url, postBody?: any): Observable<ServerResponse> {
+    return this.http.post(url, postBody, httpOptions)
+      .pipe(
+        map(
+          (res: ServerResponse) => this.handleResponse(res)
+        ),
+        catchError(this.handleError)
+      );
   }
 
-  createRequestOptions(options: RequestOptions | Request) {
-    const token: string = localStorage.getItem(AppConstants.accessTokenLocalStorage);
-    if (this.helperService.addContentTypeHeader && typeof this.helperService.addContentTypeHeader === 'string') {
-      options.headers.append('Content-Type', this.helperService.addContentTypeHeader);
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
     } else {
-      const contentTypeHeader: string = options.headers.get('Content-Type');
-      if (!contentTypeHeader && this.helperService.addContentTypeHeader) {
-        options.headers.append('Content-Type', AppConstants.defaultContentTypeHeader);
-      }
-      options.headers.append('Authorization', token);
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
     }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
   }
-  catchAuthError(self: HttpService) {
-    // we have to pass HttpService's own instance here as `self`
-    return (res: Response) => {
-      if (res.status === 401 || res.status === 403) {
-        // if not authenticated
-        localStorage.removeItem(AppConstants.userLocalStorage);
-        localStorage.removeItem(AppConstants.accessTokenLocalStorage);
-        this.router.navigate([AppConstants.loginPageUrl]);
-      }
-      return throwError(res);
-    };
+
+  handleResponse(res: ServerResponse) {
+    if (res.status === false) {
+      return throwError('Something bad happened; please try again later.');
+    }
+    return res.data;
   }
 }

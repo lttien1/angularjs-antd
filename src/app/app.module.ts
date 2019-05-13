@@ -8,9 +8,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { ContactsComponent } from './contacts/contacts.component';
+
+// Components
 import { LayoutComponent } from './components/layout/layout.component';
-import { SettingsComponent } from './settings/settings.component';
+import { ContactsComponent, SettingsComponent } from './containers';
+
+// Services
+import { httpInterceptorProviders } from './services/http-interceptors';
+import { AuthService } from './services/auth.service';
+import { HttpErrorHandler } from './services/http-error-handler.service';
+import { HttpService } from './services/http.service';
+import { MessageService } from './services/message.service';
 
 registerLocaleData(en);
 
@@ -29,7 +37,14 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     NgZorroAntdModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    AuthService,
+    HttpErrorHandler,
+    MessageService,
+    HttpService,
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
