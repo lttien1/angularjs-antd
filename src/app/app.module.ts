@@ -9,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 
+// Libary
+import { AngularSplitModule } from 'angular-split';
+
 // Components
 import { LayoutComponent } from './components/layout/layout.component';
 import { ContactsComponent, SettingsComponent } from './containers';
@@ -19,15 +22,28 @@ import { AuthService } from './services/auth.service';
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { HttpService } from './services/http.service';
 import { MessageService } from './services/message.service';
+import { TableComponent } from './components/table/table.component';
+
+// Pipes
+import { MapSelectItemPipe } from './pipes/map-select-item.pipe';
+import { ConvertUndefinedValuePipe } from './pipes/convert-undefined-value.pipe';
+import { SplitPaneComponent } from './components/split-pane/split-pane.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
+    // Components
     AppComponent,
     ContactsComponent,
     LayoutComponent,
-    SettingsComponent
+    SettingsComponent,
+    TableComponent,
+
+    // Pipes
+    MapSelectItemPipe,
+    ConvertUndefinedValuePipe,
+    SplitPaneComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +51,8 @@ registerLocaleData(en);
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    AngularSplitModule.forRoot()
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

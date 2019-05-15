@@ -1,3 +1,10 @@
+.im-contacts {
+  /* display: flex; */
+  height: 100%;
+  /* flex-direction: column; */
+  /* width: 100%; */
+}
+
 .trigger {
   font-size: 18px;
   line-height: 64px;

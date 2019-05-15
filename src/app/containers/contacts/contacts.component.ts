@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from './contact.service';
+import { ContactResponse, Field, SearchResult } from 'src/app/interfaces';
+import { SearchFilter } from 'src/app/interfaces/searchfilter';
 
 @Component({
   selector: 'app-contacts',
@@ -9,12 +11,14 @@ import { ContactService } from './contact.service';
 export class ContactsComponent implements OnInit {
   constructor(private contactService: ContactService) { }
 
-  private contactAndFields;
+  // private contactAndFields;
+  private tableData: SearchResult;
+  private tableFields: Array<Field> = [];
 
   ngOnInit() {
-    this.contactService.getContactAndFields().subscribe((data) => {
-      // console.log('^^^^^^^^^^^^^^', data);
-      this.contactAndFields = data;
+    this.contactService.getContactAndFields().subscribe((data: ContactResponse) => {
+      this.tableData = data.searchResult;
+      this.tableFields = data.tableFields.filter(field => field.show);
     });
   }
 }

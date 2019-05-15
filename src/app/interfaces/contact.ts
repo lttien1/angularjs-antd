@@ -26,7 +26,7 @@ interface Shop {
   forDemo: boolean;
 }
 
-interface SearchResult {
+export interface SearchResult {
   contacts: Array<Contact>;
   total: number;
   filter: Filter;

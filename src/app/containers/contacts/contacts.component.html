@@ -1,1 +1,9 @@
-<p>Contacts</p>
+<div class="im-contacts">
+  <app-split-pane [templateLeft]="templateLeft" [templateRight]="templateRight"></app-split-pane>
+  <ng-template #templateLeft>
+    <app-table [data]="tableData ? tableData.contacts : []" [columns]="tableFields"></app-table>
+  </ng-template>
+  <ng-template #templateRight>
+    <p>adasgdasgdgas</p>
+  </ng-template>
+</div>

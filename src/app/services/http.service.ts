@@ -23,7 +23,7 @@ export class HttpService {
       );
   }
 
-  post(url, postBody?: any): Observable<ServerResponse> {
+  post(url, postBody?: any): Observable<any> {
     return this.http.post(url, postBody, httpOptions)
       .pipe(
         map(

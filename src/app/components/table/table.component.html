@@ -1,0 +1,24 @@
+<nz-table #table nzSize="middle" nzBordered [nzData]="data" [nzPageSize]="pageSize" nzShowPagination nzShowSizeChanger
+  (nzCurrentPageDataChange)="currentPageDataChange($event)" [nzScroll]="{ x: '1000px', y: '600px' }">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)" nzWidth="50px" nzLeft="0px"></th>
+      <th nzWidth="50px" [nzAlign]="'center'" nzLeft="50px"><i nz-icon [nzType]="'setting'"></i></th>
+      <th *ngFor="let column of columns; index as i" nzShowSort nzSortKey="column.id"
+        nzWidth="{{ i === columns.length - 1 ? undefined :  column.width + 'px' }}">
+        {{ column.name }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of table.data">
+      <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[item.id]" (nzCheckedChange)="refreshStatus()" nzLeft="0px"></td>
+      <td nzWidth="50px" [nzAlign]="'center'" nzLeft="50px">
+        <i nz-icon [nzType]="'message'" *ngIf="item.phone"></i>
+      </td>
+      <td *ngFor="let column of columns">
+        {{ item[column.id] | mapSelectItem: column }}
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

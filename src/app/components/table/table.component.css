@@ -1,0 +1,9 @@
+/* [nz-icon] {
+  margin-right: 6px;
+  font-size: 14px;
+} */
+
+.ant-table-body {
+  max-height: 500px;
+  overflow: auto scroll;
+}
