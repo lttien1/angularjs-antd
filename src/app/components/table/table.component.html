@@ -1,5 +1,5 @@
 <nz-table #table nzSize="middle" nzBordered [nzData]="data" [nzPageSize]="pageSize" nzShowPagination nzShowSizeChanger
-  (nzCurrentPageDataChange)="currentPageDataChange($event)" [nzScroll]="{ x: '1000px', y: '600px' }">
+  (nzCurrentPageDataChange)="currentPageDataChange($event)" [nzScroll]="{ x: '1000px', y: tableBodyHeight + 'px' }">
   <thead (nzSortChange)="sort($event)" nzSingleSort>
     <tr>
       <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"

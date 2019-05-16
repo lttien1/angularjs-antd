@@ -4,6 +4,14 @@
     <app-table [data]="tableData ? tableData.contacts : []" [columns]="tableFields"></app-table>
   </ng-template>
   <ng-template #templateRight>
-    <p>adasgdasgdgas</p>
+    <nz-tabset>
+      <nz-tab [nzTitle]="titleTemplate">
+        <ng-template #titleTemplate><i nz-icon [type]="'user'"></i>Contact Information</ng-template>
+        Contact Information
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+  <ng-template *ngIf="showTemplate">
+    Show this content
   </ng-template>
 </div>

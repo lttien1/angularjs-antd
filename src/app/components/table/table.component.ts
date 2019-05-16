@@ -12,6 +12,9 @@ export class TableComponent implements OnInit {
   mapOfCheckedId: { [key: string]: boolean } = {};
   private pageSize = 20;
 
+  // 64 - header, 80 - margin and padding, 47 - header table, 56 - pagination
+  private tableBodyHeight = window.innerHeight - 64 - 80 - 47 - 56;
+
   constructor() { }
 
   ngOnInit() {
